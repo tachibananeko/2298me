@@ -113,7 +113,6 @@
             @extend %hand;
             width: calc(100% / 3 - 32px);
             background: map-get($bg_color, primary);
-            transform: translate3d(0,0,0);
 
             @include mw_xs{
                 width: 100%;
@@ -150,7 +149,6 @@
             // 手指效果
             @include hoverHandler {
                 box-shadow: 0 0 10px map-get($txt_color, shadow);
-                transform: scale(1.1);
             }
         }
     }
