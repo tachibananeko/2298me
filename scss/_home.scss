@@ -1,0 +1,352 @@
+// 輪播圖
+.slider{
+    position: relative;
+    padding-bottom: 100px;
+    overflow: hidden;
+
+    @include mw_xs {
+        padding-bottom: 70%;
+    }
+
+    // .slider__img
+    &__img{
+        @include d_f(flex, 0, 0);
+        margin: auto;
+
+        img{
+            object-position: 25%;
+        }
+
+        @include mw_xs{
+            @include pos_a(tbl, 0);
+        }
+    }
+
+    // .slider__info
+    &__info{
+        @include d_f(flex, 0, space-between);
+        @include pos_a(bl, 0);
+        width: 100%;
+        color: map-get($txt_color, white);
+
+        h2{
+            @extend %txtshadow;
+            letter-spacing: 1.5px;
+            color: map-get($txt_color, white);
+            font-size: 56px;
+
+            @include mw_md{
+                font-size: 48px;
+            }
+
+            @include mw_sm {
+                font-size: 40px;
+            }
+
+            @include mw_xs{
+                font-size: 32px;
+                margin-bottom: 32px;
+            }
+
+            span{
+                display: block;
+                font-weight: bold;
+            }
+        }
+
+        // .slider__info__txt
+        &__txt{
+            width: 33%;
+            padding: 32px;
+            background: map-get($bg_color, primary);
+            margin-top: 64px;
+
+            @include mw_xs{
+                display: none;
+            }
+
+            h3{
+                font-size: 40px;
+                margin-bottom: 16px;
+
+                @include mw_sm {
+                    font-size: 24px;
+                    margin-bottom: 10px;
+                }
+            }
+
+            p{
+                line-height: 24px;
+                font-size: 16px;
+                margin-bottom: 16px;
+            }
+        }
+    }
+}
+
+
+
+// 服務
+.services{
+    position: relative;
+    padding-top: 32px;
+    padding-bottom: 32px;
+
+    // .services__title
+    &__title{
+        @extend %title;
+        margin-bottom: 64px;
+
+        @include mw_xs{
+            margin-bottom: 32px;
+        }
+    }
+
+    // .services__item
+    &__item{
+        @include d_f(flex, 0, space-between);
+        flex-wrap: wrap;
+        
+
+        // .services__item__txt
+        &__txt{
+            @extend %hand;
+            width: calc(100% / 3 - 32px);
+            background: map-get($bg_color, primary);
+            transform: translate3d(0,0,0);
+
+            @include mw_xs{
+                width: 100%;
+            }
+
+            img{
+                @extend %transition;
+                display: block;
+                width: 100%;
+                margin-bottom: 24px;
+            }
+
+            h3{
+                color: map-get($txt_color, white);
+                font-size: 20px;
+                font-weight: bold;
+                margin-bottom: 24px;
+                text-align: center;
+                
+                @include mw_lg{
+                    font-size: 20px;
+                }
+                
+                @include mw_xs{
+                    margin-bottom: 16px;
+                }
+            }
+
+            .more_btn{
+                display: block;
+                margin: auto auto 20px;
+            }
+
+            // 手指效果
+            @include hoverHandler {
+                box-shadow: 0 0 10px map-get($txt_color, shadow);
+                transform: scale(1.1);
+            }
+        }
+    }
+}
+
+
+
+// 服務數據
+.data{
+    position: relative;
+    padding-top: 64px;
+    padding-bottom: 64px;
+    background: url(../images/img_data.jpg) no-repeat right / cover;
+    overflow: hidden;
+
+    @include mw_xs{
+        padding-top: 32px;
+        padding-bottom: 0;
+    }
+
+    // .data__box
+    &__box{
+        @extend %txtshadow;
+        @include d_f(flex, 0, space-between);
+        flex-wrap: wrap;
+        color: map-get($txt_color, white);
+        font-size: 20px;
+
+        @include mw_xs{
+            font-size: 16px;
+        }
+
+        li{
+            width: calc(100% / 4 - 16px);
+            text-align: center;
+
+            @include mw_xs{
+                width: calc(100% / 2 - 16px);
+                margin-bottom: 64px;
+            }
+
+            &::before{
+                content: attr(data-txt);
+                display: block;
+                font-weight: bold;
+                font-size: 48px;
+                margin-bottom: 16px;
+            }
+        }
+    }
+}
+
+
+
+// 產品
+.product{
+    @include d_f(flex, center, space-between);    
+    flex-wrap: wrap;
+    overflow: hidden;
+
+    // .product__img
+    &__img{
+        position: relative;
+        width: calc(50% - 32px);
+        height: 35vw;
+        background: url(../images/img_product.jpg) no-repeat right top / cover;
+
+        @include mw_xs{
+            width: 100%;
+            height: 80vw;
+            margin-bottom: 16px;
+        }
+    }
+
+    // .product__txt
+    &__txt{
+        width: 50%;
+        padding-right: 200px;
+
+        @include mw_lg {
+            padding-right: 64px;
+        }
+    
+        @include mw_md {
+            padding-right: 24px;
+        }
+
+        @include mw_xs{
+            width: 100%;
+            padding-left: 24px;
+            padding-bottom: 32px;
+        }
+
+        h3 {
+            @extend %title;
+            margin-bottom: 32px;
+            text-align: left;
+
+            @include mw_lg{
+                margin-bottom: 16px;
+            }
+        }
+
+        p{
+            line-height: 24px;
+            font-size: 20px;
+            margin-bottom: 32px;
+        }
+    }
+    
+    .more_btn{
+        background: map-get($bg_color, linear);
+
+        &::after {
+            filter: brightness(2);
+        }
+
+        @include hoverHandler {
+            filter: brightness(1.1);
+        }
+    }
+}
+
+
+
+// 住戶
+.resident{
+    position: relative;
+    padding-top: 64px;
+    background: url(../images/im_resident.jpg) 60% bottom / cover;
+
+    @include mw_xs{
+        padding-top: 32px;
+    }
+
+    &::after{
+        @include pos_a(bl, 0);
+        content: '';
+        width: 100%;
+        height: 64px;
+        background: map-get($bg_color, primary);
+    }
+
+    // .resident__title
+    &__title{
+        @extend %title;
+        color: map-get($txt_color, white);
+        margin-bottom: 240px;
+
+        @include mw_md {
+            margin-bottom: 160px;
+        }
+    }
+
+    // .resident__info
+    &__info{
+        position: relative;
+        @include d_f(flex, 0, 0);
+        flex-wrap: wrap;
+        z-index: 2;
+
+        @include mw_xs{
+            width: 80%;
+            margin: auto;
+        }
+
+        li{
+            @include d_f(flex, center, 0);
+            flex-direction: column;
+            width: calc(100% / 3);
+            padding: 32px;
+            background: map-get($bg_color, black_alpha);
+            color: map-get($txt_color, white);
+            font-size: 24px;
+            text-align: center;
+
+            @include mw_md{
+                font-size: 20px;
+            }
+
+            @include mw_xs{
+                width: 100%;
+            }
+
+            &+li{
+                border-left: 1px solid #000;
+
+                @include mw_xs {
+                    border: 0;
+                }
+            }
+        }
+
+        img{
+            height: 50px;
+            margin-bottom: 32px;
+        }
+    }
+}

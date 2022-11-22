@@ -1,0 +1,341 @@
+
+// 常用設定
+%txtshadow{
+	text-shadow: 0 0 10px map-get($txt_color, shadow);
+}
+// 動畫
+%transition {
+	transition: all .3s ease-in-out;
+}
+
+// 定位
+@function pos-chtext($data) {
+    @if $data=='T' {
+        @return top;
+    }
+    @else if $data=='R' {
+        @return right;
+    }
+    @else if $data=='B' {
+        @return bottom;
+    }
+    @else if $data=='L' {
+        @return left;
+    }
+}
+@mixin pos_a ($direction, $val...) {
+	position: absolute;
+
+    $result: ();
+    $data: to-upper-case($direction);
+    @for $i from 1 through str-length($data) {
+        $result: append($result, str-slice($data, $i, $i));
+        #{pos-chtext(nth($result, $i))}:#{if(length($val)==1,$val,nth($val,$i))};
+    }
+}
+
+@mixin d_f($flex, $ai: stretch, $jc: flex-start) {
+	display: $flex;
+
+	@if ($ai !=0) {
+		align-items: $ai;
+	}
+
+	@if ($jc !=0) {
+		justify-content: $jc;
+	}
+}
+
+// 多行縮字點點點
+@mixin omission($line, $height) {
+	display: -webkit-box;
+	-webkit-box-orient: vertical;
+	-webkit-line-clamp: $line;
+	overflow: hidden;
+	max-height:$height;
+}
+// scroll
+@mixin scrollbar($x, $y, $open:touch) {
+	overflow-x: $x;
+	overflow-y: $y;
+	-webkit-overflow-scrolling: $open;
+}
+
+
+// 自定義
+// 圓角遮罩
+@mixin radius_hidden($size: 3px){
+	border-radius: $size;
+	overflow: hidden;
+}
+
+// 漸層背景字
+@mixin bg_txt($bg, $size) {
+	content: attr(data-txt);
+	color: transparent;
+	background: $bg;
+	-webkit-background-clip: text;
+	background-clip: text;
+	font-size: $size;
+	-webkit-text-fill-color: transparent;
+}
+
+// 三角形
+@mixin triangle ($size, $color, $align, $type: 0.8666666) {
+	height: 0;
+	width: 0;
+
+	@if $align==top {
+		border-bottom: calc($size * $type) solid $color;
+		border-left: calc($size / 2) solid transparent;
+		border-right: calc($size / 2) solid transparent;
+	}
+
+	@else if $align==right {
+		border-left: calc($size * $type) solid $color;
+		border-top: calc($size / 2) solid transparent;
+		border-bottom: calc($size / 2) solid transparent;
+	}
+
+	@else if $align==bottom {
+		border-top: calc($size * $type) solid $color;
+		border-left: calc($size / 2) solid transparent;
+		border-right: calc($size / 2) solid transparent;
+	}
+
+	@else if $align==left {
+		border-right: calc($size * $type) solid $color;
+		border-top: calc($size / 2) solid transparent;
+		border-bottom: calc($size / 2) solid transparent;
+	}
+
+	@else if $align==right-top {
+		border-right: $size solid $color;
+		border-bottom: $size solid transparent;
+	}
+
+	@else if $align==left-top {
+		border-left: $size solid $color;
+		border-bottom: $size solid transparent;
+	}
+
+	@else if $align==right-bottom {
+		border-right: $size solid $color;
+		border-top: $size solid transparent;
+	}
+
+	@else if $align==left-bottom {
+		border-left: $size solid $color;
+		border-top: $size solid transparent;
+	}
+}
+
+// 漸層線
+@mixin border($border_px, $border_img) {
+	border-style: solid;
+	border-width: $border_px;
+	border-image: $border_img;
+}
+
+
+
+
+
+
+
+
+
+
+// RWD相關
+$breakpoints: (
+	pc: 1280px,
+	big_pad: 1180px,
+	pad: 1024px,
+	pad_vl: 996px,
+	ph: 599px
+);
+
+@mixin mw_xl {
+	@media screen and (max-width: map-get($breakpoints, "pc")) {
+		@content;
+	}
+}
+
+@mixin mw_lg {
+	@media screen and (max-width: map-get($breakpoints, "big_pad")) {
+		@content;
+	}
+}
+
+@mixin mw_md {
+	@media screen and (max-width: map-get($breakpoints, "pad")) {
+		@content;
+	}
+}
+
+@mixin mw_sm {
+	@media screen and (max-width: map-get($breakpoints, "pad_vl")) {
+		@content;
+	}
+}
+
+@mixin mw_xs {
+	@media screen and (max-width: map-get($breakpoints, "ph")) {
+		@content;
+	}
+}
+
+// 筆電高度 766px 正常高度870px
+@mixin mw_lowhigh {
+	@media only screen and (max-height: 770px) and (min-width: 1025px) and (max-width: 1440px) {
+		@content;
+	}
+}
+
+// ph橫向
+@mixin mw_ls {
+	@media only screen and (max-height: 480px) and (min-width: 481px) and (max-width: 926px) {
+		@content;
+	}
+}
+
+// 僅在pc顯示
+@mixin fine {
+	@media (pointer: fine) and (max-resolution: 2dppx),
+	screen and (pointer: fine) and (-webkit-max-device-pixel-ratio: 2),
+	(-moz-touch-enabled: 0){
+		@content;
+	}
+}
+// 僅在ph顯示
+@mixin coarse{
+	@media (pointer: coarse),
+	(-moz-touch-enabled: 1),
+	screen and (pointer: fine) and (min-resolution: 2dppx) and (max-width: 1023px){
+		@content;
+	}
+}
+
+
+
+
+
+
+
+
+
+
+// 手指hover相關
+// 一般
+.hand,
+[class*="_btn"]:not(:disabled),
+%hand {
+	cursor: pointer;
+}
+.no_hand,
+%no_hand {
+	cursor: default;
+	transition: none;
+}
+
+// 一般滑過
+@mixin hoverHandler {
+	@media (pointer: fine) and (max-resolution: 2dppx),
+	screen and (pointer: fine) and (-webkit-max-device-pixel-ratio: 2),
+	(-moz-touch-enabled: 0) {
+		&:not(.--err):hover {
+			@content;
+		}
+	}
+	&:not(.--err):active {
+		@content;
+	}
+
+	transition: all .3s ease-in-out;
+}
+
+// 按鈕滑過
+@mixin btn_hoverHandler($border, $txt) {
+
+	@media (pointer: fine) and (max-resolution: 2dppx),
+	screen and (pointer: fine) and (-webkit-max-device-pixel-ratio: 2),
+	(-moz-touch-enabled: 0) {
+		&:hover {
+			border-width: $border;
+			@content;
+
+			&::after {
+				color: $txt;
+			}
+
+			.hover_item {
+				opacity: 1;
+			}
+		}
+	}
+
+	&:active {
+		border-width: $border;
+		@content;
+
+		&::after {
+			color: $txt;
+		}
+
+		.hover_item {
+			transition: none;
+			opacity: 1;
+		}
+	}
+}
+
+// 距離設定
+@function distance($count: 4) {
+	@return 5px * $count;
+}
+@mixin mr_distance {
+	margin-right: distance();
+
+	@include mw_xs{
+		margin-right: distance(2);
+	}
+}
+
+$direction: (
+    t: top,
+    r: right,
+	b: bottom,
+	l: left,
+
+);
+@each $name, $value in $direction{
+	@for $num from 5 through 20 {
+		.m#{$name}#{$num} {
+			margin-#{$value}: $num + px;
+		}
+	}
+}
+// 左右置中
+$align: (
+	c: center,
+	l: left,
+	r: right,
+
+);
+@each $name,$value in $align {
+	.txt#{$name} {
+		text-align: $value  !important;
+	}
+}
+// 寬度設定
+$num: 100;
+@while $num > 0 {
+	.w#{$num} {
+		width: $num * 1% !important;
+	}
+	.w#{$num}px {
+		width: $num + px !important;
+	}
+
+	$num: $num - 1;
+}

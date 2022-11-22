@@ -1,0 +1,14 @@
+@import url('https://fonts.googleapis.com/css2?family=Raleway:wght@400;700&family=Roboto:wght@400;700&display=swap');
+@import "share_variable";
+@import "reset";
+@import "mixin";
+
+@import "share_tool"; //該站專屬共用元件
+
+
+// layout
+@import "frame"; //框架
+@import "home"; //主頁
+@import "animate"; //動畫
+
+

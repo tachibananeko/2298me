@@ -1,0 +1,182 @@
+header{
+    @extend %transition;
+    @include d_f(flex, center, 0);
+    position: relative;
+    height: 64px;
+    padding-top: 8px;
+    padding-bottom: 8px;
+    background: map-get($bg_color, white);
+    box-shadow: 0 0 0 transparent;
+    z-index: 10;
+
+    // head固定
+    &.--fix{
+        position: fixed;
+        width: 100%;
+        top: 0;
+        left: 0;
+        box-shadow: 3px 3px 15px map-get($bg_color, black_alpha);
+    }
+
+    h1{
+        @extend %hand;
+        height: 100%;
+        width: 150px;
+        background: url(../images/icon_logo.svg) no-repeat center / contain;
+        color: transparent;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+
+        // 手指效果
+        @include hoverHandler {
+            filter: brightness(1.2);
+        }
+    }
+
+    .menu{
+        @include d_f(flex, 0, 0);
+        margin-left: auto;
+        color: map-get($txt_color, primary);
+        
+        @include mw_md{
+            position: fixed;
+            top: 64px;
+            left: 0;
+            flex-direction: column;
+            width: 100%;
+            height: 100%;
+            background: map-get($bg_color, black_alpha);
+            font-size: 20px;
+            z-index: 3;
+
+            display: none;
+
+            @at-root header.--open .menu{
+                display: block;
+            }
+        }
+
+        >li{
+            @extend %hand;
+            position: relative;
+            margin-left: 32px;
+            font-weight: 700;
+            
+            &::after{
+                @extend %transition;
+                @include pos_a(tl, calc(100% + 12px), 0);
+                content: attr(data-txt);
+                display: block;
+                white-space: nowrap;
+                transform: rotateZ(180deg) rotateY(-180deg) translate3d(0, 0, 0);
+                opacity: 0;
+            }
+
+            @include mw_md{
+                @include border(1px 0 0, map-get($border_color, primary));
+                padding: 16px 0;
+                color: map-get($txt_color, white);
+                margin-left: 0;
+                text-align: center;
+            }
+            
+            // 手指效果
+            @include hoverHandler {
+                &::after{
+                    transform: rotateZ(180deg) rotateY(-180deg) translate3d(0, 100%, 0);
+                    opacity: .3;
+
+                    @include mw_md{
+                        opacity: 0;
+                    }
+                }
+            }
+        }
+    }
+
+    .ham_btn{
+        @extend %hand;
+        @include d_f(flex, 0, center);
+        display: none;
+
+        flex-direction: column;
+        width: 32px;
+        height: 64px;
+        margin-left: auto;
+
+        @include mw_md{
+            display: flex;
+        }
+
+        span{
+            @extend %hand;
+            @extend %transition;
+            display: block;
+            width: 100%;
+            height: 3px;
+            background: map-get($bg_color, primary);
+            margin-bottom: 6px;
+
+            @at-root .--open .ham_btn span:nth-child(1) {
+                transform: translateY(12px) rotate(45deg);
+            }
+            @at-root .--open .ham_btn span:nth-child(2) {
+                opacity: 0;
+            }
+            @at-root .--open .ham_btn span:nth-child(3) {
+                transform: translateY(-6px) rotate(-45deg);
+            }
+        }
+    }
+}
+
+
+
+main{
+    min-height: 50vh;
+    @at-root header.--fix+main{
+        padding-top: 64px;
+    }
+}
+
+
+
+// footer
+footer{
+    @include d_f(flex, center, space-between);
+    height: 96px;
+    background: map-get($bg_color, primary);
+
+    h2{
+        @extend %hand;
+        height: 100%;
+        width: 150px;
+        background: url(../images/icon_logo_w.svg) no-repeat center / contain;
+        color: transparent;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+    
+        // 手指效果
+        @include hoverHandler {
+            filter: brightness(1.2);
+        }
+
+        @include mw_xs{
+            display: none;
+        }
+    }
+}
+
+.copyright{
+    color: map-get($bg_color, white);
+    font-size: 14px;
+
+    @include mw_xs{
+        width: 100%;
+        text-align: center;
+    }
+}
