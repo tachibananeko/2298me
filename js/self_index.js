@@ -41,17 +41,38 @@ AOS.init();
 
 
 // Alex data_box
+var data_box = $('#data_box');
 var data_items = $('#data_box > li');
-var runTime = 750;//基礎值0.75秒
-var minCount = 8; //最少跑次數
-for (let i = 0; i < data_items.length; i++) {
-    const element = data_items[i];
-	runNumHandler(i,element.dataset.txt.replace(/,/gi,''));
+var runTime = 1500;//基礎值0.75秒
+var minCount = 30; //最少跑次數
+var windowHeight = $(window).innerHeight();
+var isDataNumHandler=false;
+$(window).scroll(()=>{
+	if(!isDataNumHandler){
+		var objTop = data_box.offset().top;
+		var scroll =$(this).scrollTop()
+		var objHeight =data_box.height()/4;
+		if(objTop+objHeight<windowHeight + scroll){
+			dataNumHandler();
+			isDataNumHandler=true;
+		}
+	}
+	
+})
+function dataNumHandler() {
+	for (let i = 0; i < data_items.length; i++) {
+		const element = data_items[i];
+		runNumHandler(i,element.dataset.txt.replace(/,/gi,''));
+	}
 }
 function runNumHandler(item,txt) {
 	var sec = runTime/minCount;
 	var startCount = 0;
-	var rangeCount = parseInt(txt / minCount);
+	if(txt>minCount){
+		var rangeCount = parseInt(txt / minCount);
+	}else{
+		var rangeCount = 1;
+	}	
 	var runNum = setInterval(()=>{	
 		if(startCount<txt){
 			startCount=startCount+rangeCount
